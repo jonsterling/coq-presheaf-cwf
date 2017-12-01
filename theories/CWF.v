@@ -59,7 +59,6 @@ Section CWF.
       by rewrite <- fmap_cmp.
     + move=> [a b] //=; move: b.
       apply: equal_f; t_fold_cmps.
-      repeat rewrite gather_cmp.
       by rewrite <- fmap_cmp.
   Qed.
 
