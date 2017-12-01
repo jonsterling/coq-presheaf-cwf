@@ -42,7 +42,7 @@ Section CWF.
 
   (* non-dependent products *)
   Program Definition Prod Γ (A B : Γ ⊢ type) : Γ ⊢ type :=
-    {| fobj := fun X => A X *  B X;
+    {| fobj := fun X => A X * B X;
        fmap := fun X Y f a => (f <$[A]> fst a, f <$[B]> snd a)
     |}.
 
