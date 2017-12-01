@@ -34,11 +34,13 @@ Program Definition ELT `(ℱ : Psh ℂ) : Category :=
   |}.
 
 Next Obligation.
-  by rewrite fmap_idn.
-Qed.
+  generalize (elt H).
+  apply: equal_f.
+  refine (@fmap_idn ℂ SET ℱ _).
+Defined.
 
 Next Obligation.
   by rewrite fmap_cmp.
-Qed.
+Defined.
 
 Notation "∮ ℱ" := (ELT ℱ) (at level 10).

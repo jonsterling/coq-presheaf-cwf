@@ -1,13 +1,14 @@
 From mathcomp Require Import ssreflect.
 Set Bullet Behavior "Strict Subproofs".
-Set Universe Polymorphism.
 Set Primitive Projections.
+Set Universe Polymorphism.
 Generalizable All Variables.
 
 Require Import Coq.Program.Tactics.
 Require Import Coq.Program.Equality.
 Require Import Coq.Logic.FunctionalExtensionality Coq.Logic.ProofIrrelevance.
 Require Import Unicode.Utf8.
+Require Import Coq.Logic.EqdepFacts.
 
 From cwf Require Import Basics Category Functor Sets Presheaf.
 
@@ -30,6 +31,17 @@ Section CWF.
     {| fobj := fun x => True |}.
 
   Notation "⋄" := Emp.
+
+  Program Definition Snoc (Γ : Cx) (A : Γ ⊢ type) : Cx :=
+    {| fobj := fun x => { γ : Γ x & A {| fib := x; elt := γ |} };
+       fmap := fun x y f X => existT _ (f <$[Γ]> (projT1 X)) (f <$[A]> (projT2 X))
+    |}.
+  Next Obligation.
+    apply: functional_extensionality.
+    move=> [γ a].
+    simplify_eqs.
+ (* THIS IS HARD *)
+  Admitted.
 
   Theorem fold_cmp {A B C : SET} {m : B ~> C} {n : A ~> B} :
     (fun x : A => m (n x)) = m ∘ n.

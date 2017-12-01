@@ -105,8 +105,9 @@ endif
 VFILES:=theories/Basics.v\
   theories/Category.v\
   theories/Functor.v\
-  theories/Type.v\
-  theories/Presheaf.v
+  theories/Sets.v\
+  theories/Presheaf.v\
+  theories/Cwf.v
 
 ifneq ($(filter-out archclean clean cleanall printenv,$(MAKECMDGOALS)),)
 -include $(addsuffix .d,$(VFILES))

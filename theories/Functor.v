@@ -38,3 +38,8 @@ Infix "<$[ F ]>" := (@fmap _ _ F%functor _ _)
 
 
 Hint Rewrite @fmap_idn @fmap_cmp.
+
+Notation "fobj[ F ]" := (@fobj _ _ F%functor)
+  (at level 9, format "fobj[ F ]") : object_scope.
+Notation "fmap[ F ]" := (@fmap _ _ F%functor _ _)
+  (at level 9, format "fmap[ F ]") : morphism_scope.
