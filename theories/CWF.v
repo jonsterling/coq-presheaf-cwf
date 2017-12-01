@@ -52,14 +52,10 @@ Section CWF.
   Qed.
 
   Next Obligation.
-    apply: functional_extensionality; move=> ab.
-    apply: f_equal2; move: ab.
-    + move=> [a b] //=; move: a.
-      apply: equal_f; t_fold_cmps.
-      by rewrite <- fmap_cmp.
-    + move=> [a b] //=; move: b.
-      apply: equal_f; t_fold_cmps.
-      by rewrite <- fmap_cmp.
+    apply: functional_extensionality; move=> [a b] //=.
+    apply: f_equal2; [move: a | move: b];
+    apply: equal_f; t_fold_cmps;
+    by rewrite <- fmap_cmp.
   Qed.
 
 End CWF.
