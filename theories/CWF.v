@@ -31,9 +31,8 @@ Section CWF.
 
   Notation "⋄" := Emp.
 
-  Theorem fold_cmp :
-    ∀ (A B C: @obj SET) (m : B ~> C) (n : A ~> B),
-      (fun x : A => m (n x)) = m ∘ n.
+  Theorem fold_cmp {A B C : SET} {m : B ~> C} {n : A ~> B} :
+    (fun x : A => m (n x)) = m ∘ n.
   Proof.
     auto.
   Qed.
