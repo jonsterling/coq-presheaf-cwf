@@ -11,6 +11,13 @@ Require Import Unicode.Utf8.
 
 From cwf Require Import Basics Category Functor Sets Presheaf.
 
+Close Scope nat_scope.
+
+Local Hint Extern 4 => apply: id_l.
+Local Hint Extern 4 => apply: id_r.
+Local Hint Extern 4 => apply: cmp_assoc.
+
+
 Section CWF.
   Context `{ℂ : Category}.
 
@@ -24,5 +31,37 @@ Section CWF.
 
   Notation "⋄" := Emp.
 
+  Theorem fold_cmp :
+    ∀ (A B C: @obj SET) (m : B ~> C) (n : A ~> B),
+      (fun x : A => m (n x)) = m ∘ n.
+  Proof.
+    auto.
+  Qed.
+
+  Ltac t_fold_cmps :=
+    repeat rewrite fold_cmp.
+
+  (* non-dependent products *)
+  Program Definition Prod Γ (A B : Γ ⊢ type) : Γ ⊢ type :=
+    {| fobj := fun X => A X *  B X;
+       fmap := fun X Y f a => (f <$[A]> fst a, f <$[B]> snd a)
+    |}.
+
+  Next Obligation.
+    apply: functional_extensionality; move=> [? ?].
+    by repeat erewrite @fmap_idn.
+  Qed.
+
+  Next Obligation.
+    apply: functional_extensionality; move=> ab.
+    apply: f_equal2; move: ab.
+    + move=> [a b] //=; move: a.
+      apply: equal_f; t_fold_cmps.
+      by rewrite <- fmap_cmp.
+    + move=> [a b] //=; move: b.
+      apply: equal_f; t_fold_cmps.
+      repeat rewrite gather_cmp.
+      by rewrite <- fmap_cmp.
+  Qed.
 
 End CWF.
